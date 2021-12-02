@@ -1,6 +1,8 @@
 version: "3.9"
 services:
   web:
+    environment:
+      - APPCONFIG=https://firmusapitesterconfig.azconfig.io
     build: .
     ports:
       - "7000:8080"
