@@ -7,7 +7,9 @@ services:
       context: .
       dockerfile: ./Dockerfile
     environment:
-      NODE_ENV: production
+      NODE_ENV: development
       APPCONFIG: https://firmusapitesterconfig.azconfig.io
     ports:
       - 7000:8080
+      - 9229:9229
+    command: [ "node", "--inspect=0.0.0.0:9229", "index.js" ]

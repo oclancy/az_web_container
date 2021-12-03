@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const appConfigUrl = process.env.APPCONFIG
 
-console.log('${appConfigUrl}')
+console.log(appConfigUrl)
 const azureIdentity = require("@azure/identity");
 const appConfig = require("@azure/app-configuration");
 
@@ -13,14 +13,17 @@ const client = new appConfig.AppConfigurationClient(
 );
 
 (async () => {
-var port = await client.getConfigurationSetting({key:"BrightWebAppPort"})
+  //var port = await client.getConfigurationSetting({ key: "BrightWebAppPort" })
+  var port = 8080
+  console.log(port.value)
 
-console.log('${appConfigUrl}')
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+  app.get('/', async (req, res) => {
+    var port = client.getConfigurationSetting({ key: "BrightWebAppPort" })
+    
+    res.send('Hello World!')
+  })
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
-})
+  app.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`)
+  })
 })()
